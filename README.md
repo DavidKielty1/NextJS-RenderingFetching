@@ -12,15 +12,15 @@ Why use it? -> Fullstack framework for ReactJS
 
 **3 Key Features:**
 
-_1: Built-in Server-side Rendering (improved SEO!)_
+_1: Built-in Server-side Rendering (improved SEO!)_ \_
 Automatic page pre-rendering - good for SEO and initial load.
 Blending client-side and server-side: fetch data on the server and render finished pages.
 
-_2: File-based Routing_
+_2: File-based Routing_ \_
 Define pages and routes with files and folders instead of code.
 Less code, less work, highly understandable.
 
-_3: Fullstack Capabilities_
+_3: Fullstack Capabilities_ \_
 Easily add backend (server-side) code to Next/React apps
 Storing data, gatting data, authentication etc. can be added to React Projects
 
