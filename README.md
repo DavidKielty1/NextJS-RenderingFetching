@@ -32,8 +32,20 @@ Folder based-routing. Routes automatically match pages directory.
 Dynamic Routing -
 . import { useRouter } from 'next/router'
 . const router = useRouter();
+. router.query used for dynamic parameters, URL, SPA.
 
 SPA Linking without sending another request for HTML  
 . import Link from 'next/link'
 . Link prevents browserDefault of sending a request for HTML
 . Instead loads tobeloaded component 'href' component for us, changes URL. Similar to react-router Link
+
+Wrapping Layout
+. Wrap layout around Component within pages/app.js to lay layout and navigation around each page component.
+. may be relevant for ctx too?
+
+Adding link to a button to redirect to another page
+. import { useRouter } from 'next/router'
+. . react routes do not go inside functions, only at root level of a component (not in showDetailsHandler(), or any handler for example).
+. const router = useRouter();
+. router.push() -> equivalent of useHistory.push/Link. Pushes page to be top of history/stack of pages. Allows backward navigation with back function.
+
