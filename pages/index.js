@@ -1,36 +1,49 @@
+import { MongoClient } from "mongodb";
+
 import MeetUpList from "../components/meetups/MeetupList";
 
-const DUMMY_MEETUPS = [
-  {
-    id: "mu1",
-    image:
-      "https://images.unsplash.com/photo-1541370976299-4d24ebbc9077?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1333&q=80",
-    title: "First Meetup",
-    address: "address1, 12354, Peterborough",
-    description: "This is a first meetup!",
-  },
-  {
-    id: "mu2",
-    image:
-      "https://images.unsplash.com/photo-1541370976299-4d24ebbc9077?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1333&q=80",
-    title: "Second Meetup",
-    address: "address1, 12354, Scandiland",
-    description: "This is a second meetup!",
-  },
-  {
-    id: "mu3",
-    image:
-      "https://images.unsplash.com/photo-1541370976299-4d24ebbc9077?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1333&q=80",
-    title: "Third Meetup",
-    address: "address1, 12354, Phillofulough",
-    description: "This is a third meetup!",
-  },
-];
+function HomePage(props) {
+  return <MeetUpList meetups={props.meetups} />;
+}
 
-function HomePage() {
-  return (
-      <MeetUpList meetups={DUMMY_MEETUPS} />
+// export async function getServerSideProps(context) {
+//   const req = context.req;
+//   const res = context.res;
+
+//   // fetch data from an API
+
+//   return {
+//     props: {
+//       meetups: DUMMY_MEETUPS,
+//     },
+//   };
+// }
+
+export async function getStaticProps() {
+  // fetch data from API/database.
+
+  const client = await MongoClient.connect(
+    "mongodb+srv://NextJS-Meetups:9dxbkydOwt3WQF5i@cluster0.zywjc.mongodb.net/meetups"
   );
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  const meetups = await meetupsCollection.find().toArray();
+
+  client.close();
+
+  return {
+    props: {
+      meetups: meetups.map((meetup) => ({
+        title: meetup.title,
+        address: meetup.address,
+        image: meetup.image,
+        id: meetup._id.toString(),
+      })),
+    },
+    revalidate: 10,
+  };
 }
 
 export default HomePage;
