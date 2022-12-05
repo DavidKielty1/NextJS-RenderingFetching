@@ -75,11 +75,11 @@ Gives you access to context.req and context.res\
 Use if you have data which changes multiple times every second
 
 _SSG & paths_
-For dynamic pages (e.g. all under [meetupId])
+For dynamic pages (e.g. all under [meetupId])\
 getStaticProps(context)
 
-. const meetupId = context.params.meetupId;
-. export async function getStaticPaths() {
+. const meetupId = context.params.meetupId;\
+. export async function getStaticPaths() {\
 fallback: boolean
 { params: {meetupId: id from database}}
 
@@ -88,19 +88,27 @@ We need to tell NextJS which dynamic parameters should be used in order to pre-g
 getStaticProps allow us to generate props/data from the meetupId page.
 
 **3. Fullstack Capabilities**
-API routes - API endpoints
-Fetching - post put update delete
+API routes - API endpoints\
+Fetching - post put update delete\
 Store data in a database - return JSON data
 
-Add api folder - .js files within api folder will be turned in to api endpoints which can be targetted by requests to receive json and return json.
-Within api .js files - no react component data. No rendering, returning, defining.
-Server-side code - only runs on server. Never exposed to client. Can use credentials. Function is triggered whenever a request is sent to this route
+Add api folder - .js files within api folder will be turned in to api endpoints which can be targetted by requests to receive json and return json.\
+Within api .js files - no react component data. No rendering, returning, defining.\
+Server-side code - only runs on server. Never exposed to client. Can use credentials. Function is triggered whenever a request is sent to this route\
 . e.g. /api/new-meetup
 
 Check /api/new-meetup.js
 
 _Post Request to API new-meetup_
-Posting information from NewMeetupForm component to Api/new-meetup.
-Props are handed upward from meetupform via addMeetupHandler to newmeetup-index.js
-Within component where information is handed to, we perform a normal API request.
+Posting information from NewMeetupForm component to Api/new-meetup.\
+Props are handed upward from meetupform via addMeetupHandler to newmeetup-index.js\
+Within component where information is handed to, we perform a normal API request.\
 async function - await response = fetch('/api/new-meetup) no .js extension.
+
+**Pre-Deployment SEO Meta Data**
+_Creating tab and google search engine title for different pages_
+Within page component, also return <Head></Head>
+Within Head create a <title> component as well as a meta component.
+
+<meta name="description" content="This is what you can do on this page">
+Meta description is the description of page which will show under page title on google search.
