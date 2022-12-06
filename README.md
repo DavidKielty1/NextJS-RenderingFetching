@@ -105,10 +105,48 @@ Props are handed upward from meetupform via addMeetupHandler to newmeetup-index.
 Within component where information is handed to, we perform a normal API request.\
 async function - await response = fetch('/api/new-meetup) no .js extension.
 
+_MongoDB getStaticProps_
+Add mongo DB terminal logic into getStaticProps (Index, meetupId Index)\
+meetups = params.context.meetupId
+
+const client = await MongoClient.connect(
+. "mongodb+srv://NextJS-Meetups:[tag]@[name]].zywjc.mongodb.net/meetups"
+);
+
+const db = client.db();
+
+const meetupCollections = db.collection("meetups")
+
+1. Single instance, meetup details
+   const selectedMeetup = await meetupsCollection.findOne({
+   \_id: ObjectId(meetupId),
+   });
+
+   return {
+   props: {
+   meetupData: {
+   id: selectedMeetup.\_id.toString(),
+   title: selectedMeetup.title,
+   address: selectedMeetup.address,
+   image: selectedMeetup.image,
+   description: selectedMeetup.description,}}}
+
+2. Entire meetup list
+   const meetups = await meetupsCollection.find().toArray();
+
+   return {
+   props: {
+   meetups: meetups.map((meetup) => ({
+   title: meetup.title,
+   address: meetup.address,
+   image: meetup.image,
+   id: meetup.\_id.toString(), })), },
+   revalidate: 10, };
+
 **Pre-Deployment SEO Meta Data**
 _Creating tab and google search engine title for different pages_
-Within page component, also return <Head></Head>
-Within Head create a <title> component as well as a meta component.
+Within page component, also return <Head></Head>\
+Within Head create a <title> component as well as a meta component.\
 
-<meta name="description" content="This is what you can do on this page">
-Meta description is the description of page which will show under page title on google search.
+<meta name="description" content="This is what you can do on this page">\
+Meta description is the description of page which will show under page title on google search.\
